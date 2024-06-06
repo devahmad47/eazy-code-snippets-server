@@ -3,7 +3,6 @@ const router = express.Router();
 const Appointment = require("../../models/appointmentModel")
 const { uploadFile, deleteFile , uploadDocument} = require("../../utils/cloudinary")
 
-
 router.post('/add-appointment', async (req, res) => {
     try {
         const { userName, userEmail, userContact, estimatedBudget, completionDate, otherInfo, applicationType, referenceLink, projectStatus,projectFile,projectId } = req.body;
@@ -63,13 +62,11 @@ router.put('/:appointmentId/update-status', async (req, res) => {
         res.status(500).json({ message: 'Failed to update appointment status', error: error.message });
     }
 });
-
 // Delete Appointment
 router.delete('/:appointmentId/delete-appointment', async (req, res) => {
     try {
         const { appointmentId } = req.params;
         const deletedAppointment = await Appointment.findByIdAndDelete(appointmentId);
-
         if (!deletedAppointment) {
             return res.status(404).json({ message: 'Appointment not found' });
         }
@@ -82,6 +79,4 @@ router.delete('/:appointmentId/delete-appointment', async (req, res) => {
         res.status(500).json({ message: 'Failed to delete appointment', error: error.message });
     }
 });
-
-
 module.exports = router;

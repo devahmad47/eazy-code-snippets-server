@@ -9,13 +9,11 @@ const connectDB = require("./config/db")
 const colors = require("colors");
 const path = require('path'); 
 
-
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname,'uploads')));
 app.use(express.static(path.join(__dirname, 'multer', 'uploads')));
-
 // const userRouter = require('./api/users/user');
 // const authRouter = require('./api/users/auth');
 // const subCategoryRouter = require('./api/category/subcategory');
@@ -25,9 +23,6 @@ const adminRouter = require('./api/admin/admin');
 const productRouter = require('./api/products/addProducts');
 const appointmentRouter = require('./api/appointment/appointment');
 const careerRouter = require('./api/career/career');
-
-
-
 
 // app.use('/api/users', userRouter);
 // app.use('/api/auth', authRouter);

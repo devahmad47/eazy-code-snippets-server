@@ -8,7 +8,6 @@ const VerificationModel = require("../../models/verificationModel")
 const generateToken = require("../../config/generateToken")
 const { upload, mediaDeleteS3 } = require("../../utils/aws-v3")
 
-
 router.post('/login', async (req, res) => {
     try {
         const { email, password, } = req.body;
@@ -27,14 +26,12 @@ router.post('/login', async (req, res) => {
         if (!isPasswordValid) {
             return res.status(400).json({ message: "invalid credationals" });
         }
-
         user.jwttoken = generateToken(user._id);
         user.sessionExpiration = new Date().getTime() + (1000 * 60 * 60 * 24 * 30); // 30 days in milliseconds
         user.lastLogin = new Date();
         await user.save();
 
         res.status(200).json({ message: 'Successfully Sign In', user });
-
 
     } catch (error) {
         console.error(error);
@@ -44,7 +41,6 @@ router.post('/login', async (req, res) => {
 });
 
 // // user singup
-
 
 router.post('/sign-up', upload('Users').single('ProfilePicture'), async (req, res) => {
 

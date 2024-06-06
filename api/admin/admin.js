@@ -4,21 +4,17 @@ const AdminPanel = require("../../models/adminModel")
 const generateToken = require("../../config/generateToken")
 const bcrypt = require("bcrypt")
 
-
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const admin = await AdminPanel.findOne({ adminemail: email });
-
+    
     if (!admin) {
       return res.status(401).json({ message: 'admin not found', userstatus: 0 });
     }
-
     if (!admin.isverified) {
       return res.status(401).json({ message: 'admin is not verified' });
     }
-
     // if (admin.password !== password) {
     //   return res.status(401).json({ message: 'Incorrect password' });
     // }
@@ -49,14 +45,11 @@ router.post('/signup', async (req, res) => {
       return res.status(401).json({ message: 'Admin already exists', userstatus: 0 });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-
-
     const newAdmin = new AdminPanel({
       adminemail: email,
       password: hashedPassword,
       isverified: true,
     });
-
 
     newAdmin.jwtadmintoken = generateToken(newAdmin._id);
     newAdmin.sessionExpiration = new Date().getTime() + (30 * 24 * 60 * 60 * 1000); // 12 hour

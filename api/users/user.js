@@ -17,9 +17,7 @@ router.get('/get_all_users', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Failed to Fetch Users', error: error.message });
     }
-
 });
-
 router.get('/:id/get_user', async (req, res) => {
     const { id } = req.params;
     try {
@@ -31,8 +29,6 @@ router.get('/:id/get_user', async (req, res) => {
         if (!user.status) {
             return res.status(404).json({ message: "User is Suspended" });
         }
-
-
         res.status(200).json({ message: 'User Data fetched', user });
     } catch (error) {
         console.error(error);
@@ -50,23 +46,19 @@ router.post('/:userId/update-profile', async (req, res) => {
         if (!currentUser) {
             return res.status(404).json({ message: 'user  not found' });
         }
-
         if (userName) {
             currentUser.userName = userName
         }
         if (email) {
             currentUser.email = email
         }
-
        await currentUser.save()
         res.status(200).json({ message: 'User profile Updated Successfully', currentUser });
 
     } catch (error) {
         res.status(500).json({ message: 'Failed to Update  User Profile', error: error.message });
     }
-
 });
-
 
 router.delete('/:id/delete_user', async (req, res) => {
     const { id } = req.params;
